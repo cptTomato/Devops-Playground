@@ -6,12 +6,15 @@ Docs: https://www.digitalocean.com/community/tutorials/how-to-use-terraform-with
 Todo: 
 Create Digitalocean api access token. (Digitalocean webapp)
 Export the Token: export DO_PAT="your_personal_access_token"
+
 Switch to Terraform folder
 Initialize Terraform: terraform init
+
 Check Plan: 
 terraform plan \
   -var "do_token=${DO_PAT}" \
   -var "pvt_key=$HOME/.ssh/id_rsa"
+
 Apply changes and create vm
   terraform apply \
   -var "do_token=${DO_PAT}" \
