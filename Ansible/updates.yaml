@@ -1,0 +1,41 @@
+---
+- name: Update web servers
+  hosts: nodes
+  remote_user: root
+  
+  tasks:
+  - name: Upgrade all apt packages
+    apt:
+      force_apt_get: yes
+  - name: Update repo list
+    ansible.builtin.shell: apt update 
+    become: yes
+  - name: Add the user 'bob'
+    ansible.builtin.user:
+      name: bob
+    become: yes
+    become_method: sudo
+  - name: Remove "vim" package
+    ansible.builtin.apt:
+      name: vim
+      state: absent
+  - name: Install the package "vim"
+    ansible.builtin.apt:
+      name: vim 
+    become: yes
+    become_method: sudo
+  - name: Install the package "docker"
+    ansible.builtin.apt:
+      name: docker
+  - name: Copy file hosts with permissions
+    ansible.builtin.copy:
+      src: ../Kubernetes
+      dest: /home/bob
+      mode: '0777'
+    become: yes
+  - name: Run install Kubernetes script
+    become: yes
+    become_user: root
+    shell: cd /home/bob/Kubernetes && ./apply.sh
+  - name: Unconditionally reboot the machine with all defaults
+    ansible.builtin.reboot:

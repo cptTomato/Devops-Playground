@@ -1,0 +1,28 @@
+Terraform with Digitalocean
+
+Install Terraform and use Terraform: https://www.digitalocean.com/community/tutorials/how-to-use-terraform-with-digitalocean
+
+Then: 
+Create Digitalocean api access token
+export DO_PAT="your_personal_access_token"
+In Terraform folder:
+  terraform init
+
+  terraform plan \
+  -var "do_token=${DO_PAT}" \
+  -var "pvt_key=$HOME/.ssh/id_rsa"
+
+  terraform apply \
+  -var "do_token=${DO_PAT}" \
+  -var "pvt_key=$HOME/.ssh/id_rsa"
+
+(i) If you have a ssh-key passphrase, terraform will not be apple to login into node and performe stuff
+
+If this is finished, you can login into your node. (No Password needed)
+
+Ansible with your new node
+
+Ansible Playbook: https://spacelift.io/blog/ansible-tutorial
+Switch to Ansible folder and change the IP adress with the ip of your new server. 
+Run: 
+ansible-playbook -i hosts updates.yaml
